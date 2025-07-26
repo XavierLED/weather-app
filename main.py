@@ -11,6 +11,10 @@ def main():
     data = getAPI()
     if data.status_code == 200:
         parsed = parseData(data)
+        parsed[2] = round(kelvinToCel(float(parsed[2])))
+        parsed[3] = round(kelvinToCel(float(parsed[3])))
+        parsed[4] = round(kelvinToCel(float(parsed[4])))
+
         print(f"Sky: {parsed[0]}\nSky Description: {parsed[1]}\nCurrent Temp: {parsed[2]}\nLow Temp of: {parsed[3]}\nHigh Temp of: {parsed[4]}")
     else:
         print("some kind of error happened with getting the API data")
@@ -29,6 +33,8 @@ def parseData(data):
 
     return  looking
 
-def kelvinToCel():
+def kelvinToCel(kelvin):
+    celcius = kelvin - 273
+    return celcius
 
 main()
