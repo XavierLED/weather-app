@@ -1,5 +1,6 @@
 import requests
 import api
+import json
 
 
 def getAPI():
@@ -21,15 +22,14 @@ def main():
 
 def parseData(data):
     data = data.text
-    data = data.replace("[", '').replace(']', '').replace('{', '').replace('}', '').replace(",", ":")
-    data = data.split(':')
     looking = ['"main"', '"description"', '"temp"', '"temp_min"', '"temp_max"']
-    lookingPointer = 0
 
-    for i in range(len(data)):
-        if lookingPointer < 5 and data[i] == looking[lookingPointer]:
-            looking[lookingPointer] = data[i + 1] 
-            lookingPointer += 1
+    data = json.loads(data)
+    looking[0] = data["weather"][0]["main"]
+    looking[1] = data["weather"][0]["description"]
+    looking[2] = data["main"]["temp"]
+    looking[3] = data["main"]["temp_min"]
+    looking[4] = data["main"]["temp_max"]
 
     return  looking
 
