@@ -6,8 +6,7 @@ def getAPI(location):
     apiKey = api.getAPIKey()
     return requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={location}&appid={apiKey}")
 
-def main():
-    city = input("City name (example: Calgary):")
+def main(city):
     data = getAPI(city)
     if data.status_code == 200:
         parsed = parseData(data)
@@ -15,13 +14,13 @@ def main():
         parsed[3] = round(kelvinToCel(float(parsed[3])))
         parsed[4] = round(kelvinToCel(float(parsed[4])))
 
-        print(f"Sky: {parsed[0]}\nSky Description: {parsed[1]}\nCurrent Temp: {parsed[2]}\nLow Temp of: {parsed[3]}\nHigh Temp of: {parsed[4]}")
+        return [f"Sky: {parsed[0]}"], [f"Sky Description: {parsed[1]}"], [f"Current Temp: {parsed[2]}"], [f"Low Temp of: {parsed[3]}"], [f"High Temp of: {parsed[4]}"]
     elif data.status_code == 401:
-        print("some kind of error happened with getting the API data")
+        return "some kind of error happened with getting the API data"
     elif data.status_code == 404:
-        print("entered in invalid city name")
+        return "entered in invalid city name"
     else:
-        print("some unknown reason is messing with request")
+        return "some unknown reason is messing with request"
 
 def parseData(data):
     data = data.text
@@ -39,5 +38,3 @@ def parseData(data):
 def kelvinToCel(kelvin):
     celcius = kelvin - 273
     return celcius
-
-main()
