@@ -14,7 +14,7 @@ def main(city):
         parsed[3] = round(kelvinToCel(float(parsed[3])))
         parsed[4] = round(kelvinToCel(float(parsed[4])))
 
-        return [f"Sky: {parsed[0]}"], [f"Sky Description: {parsed[1]}"], [f"Current Temp: {parsed[2]}"], [f"Low Temp of: {parsed[3]}"], [f"High Temp of: {parsed[4]}"]
+        return [f"Sky: {parsed[0]}", f"Sky Description: {parsed[1]}", f"Current Temp: {parsed[2]}", f"Low Temp of: {parsed[3]}", f"High Temp of: {parsed[4]}"]
     elif data.status_code == 401:
         return "some kind of error happened with getting the API data"
     elif data.status_code == 404:
